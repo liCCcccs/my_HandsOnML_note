@@ -10,7 +10,7 @@ broken: you cannot use ℓ1 or ℓ2 regularization, regular dropout, max-norm, s
 topologies (so recurrent neural networks won't self-normalize).
 
 However, in practice it works quite well with sequential CNNs. If you break self-normalization, SELU will not
-necessarily outperform other activation functions.  
+necessarily outperform other activation functions.
 
 """
 import tensorflow as tf
