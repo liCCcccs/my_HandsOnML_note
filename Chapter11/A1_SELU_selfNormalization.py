@@ -49,7 +49,6 @@ def main():
 
     # scale to zero mean and standard deviation 1
     pixel_means = X_train.mean(axis=0, keepdims=True)
-    aa = 1
     pixel_stds = X_train.std(axis=0, keepdims=True)
     X_train_scaled = (X_train - pixel_means) / pixel_stds
     X_valid_scaled = (X_valid - pixel_means) / pixel_stds
