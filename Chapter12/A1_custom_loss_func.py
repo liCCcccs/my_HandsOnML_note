@@ -1,29 +1,13 @@
 """
-Define Huber loss by ourselves
+Define Huber loss in a function and save the model
+Also, custom Activation Functions, Initializers, Regularizers, and Constraints can also be done this way
 """
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
-
-from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
-
-def load_data():
-    housing = fetch_california_housing()
-    X_train_full, X_test, y_train_full, y_test = train_test_split(
-        housing.data, housing.target.reshape(-1, 1), random_state=42)
-    X_train, X_valid, y_train, y_valid = train_test_split(
-        X_train_full, y_train_full, random_state=42)
-
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_valid_scaled = scaler.transform(X_valid)
-    X_test_scaled = scaler.transform(X_test)
-
-    return X_train_scaled, X_valid_scaled, X_test_scaled, y_train, y_valid, y_test
+from load_data import load_california_housing
 
 
 def huber_fn(y_true, y_pred):
@@ -63,13 +47,15 @@ def create_model(input_shape):
 
 
 def main():
-    X_train_scaled, X_valid_scaled, X_test_scaled, y_train, y_valid, y_test = load_data()
+    X_train_scaled, X_valid_scaled, X_test_scaled, y_train, y_valid, y_test = load_california_housing()
 
     model = create_model(X_train_scaled.shape[1:])
     model.compile(loss=huber_fn, optimizer="nadam", metrics=["mae"])
 
-    model.fit(X_train_scaled, y_train, epochs=2,
+    model.fit(X_train_scaled, y_train, epochs=10,
               validation_data=(X_valid_scaled, y_valid))
+
+    model.save("./saved_model/A1_model_custom_loss_func.h5")
 
 
 if __name__ == "__main__":
