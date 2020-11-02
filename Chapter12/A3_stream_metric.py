@@ -56,8 +56,6 @@ def main():
     model.compile(loss=create_huber(2.0), optimizer="nadam", metrics=[HuberMetric(2.0)])
     model.fit(X_train_scaled.astype(np.float32), y_train.astype(np.float32), epochs=2)
 
-    print(model.metrics[-1].threshold)  # this hyper-parameter can be saved with saved_model
-
 
 if __name__ == "__main__":
     main()
