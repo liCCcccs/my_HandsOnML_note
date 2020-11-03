@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib.pyplot as plt
-
+from load_data import load_digit_mnist_unscaled
 
 K = keras.backend
 
@@ -19,16 +19,6 @@ class ExponentialLearningRate(keras.callbacks.Callback):
         K.set_value(self.model.optimizer.lr, self.model.optimizer.lr * self.factor)
 
 
-def load_preprocess_data():
-    (X_train_full, y_train_full), (X_test, y_test) = keras.datasets.mnist.load_data()
-
-    X_valid, X_train = X_train_full[:5000] / 255., X_train_full[5000:] / 255.
-    y_valid, y_train = y_train_full[:5000], y_train_full[5000:]
-    X_test = X_test / 255
-
-    return X_train, X_valid, X_test, y_train, y_valid, y_test
-
-
 def create_model(input_shape):
     model = keras.models.Sequential([
         keras.layers.Flatten(input_shape=input_shape),
@@ -41,7 +31,7 @@ def create_model(input_shape):
 
 
 def main():
-    X_train, X_valid, X_test, y_train, y_valid, y_test = load_preprocess_data()
+    X_train, X_valid, X_test, y_train, y_valid, y_test = load_digit_mnist_unscaled()
 
     model = create_model(X_train.shape[1:])
     # IMPORTANT: use "sparse_categorical_accuracy" instead of "accuracy"

@@ -3,6 +3,7 @@ from tensorflow import keras
 import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from load_data import load_fashion_mnist_unscaled
 
 class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
                "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
@@ -33,12 +34,7 @@ def evaluate_history(history):
 
 
 def main():
-    fashion_mnist = keras.datasets.fashion_mnist
-    (X_train_full, y_train_full), (X_test, y_test) = fashion_mnist.load_data()
-
-    X_valid, X_train = X_train_full[:5000] / 255, X_train_full[5000:] / 255
-    y_valid, y_train = y_train_full[:5000], y_train_full[5000:]
-    X_test = X_test / 255
+    X_train, X_valid, X_test, y_train, y_valid, y_test = load_fashion_mnist_unscaled()
 
     model = create_model(show_summary=True)
     model.compile(loss="sparse_categorical_crossentropy",

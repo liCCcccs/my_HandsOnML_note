@@ -3,20 +3,7 @@ from tensorflow import keras
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-
-
-def load_preprocess_data():
-    housing = fetch_california_housing()
-
-    X_train_full, X_test, y_train_full, y_test = train_test_split(housing.data, housing.target, random_state=41)
-    X_train, X_valid, y_train, y_valid = train_test_split(X_train_full, y_train_full, random_state=41)
-
-    scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)  # fit and transform
-    X_valid = scaler.transform(X_valid)  # transform
-    X_test = scaler.transform(X_test)  # transform
-
-    return X_train, X_valid, X_test, y_train, y_valid, y_test
+from load_data import load_california_housing
 
 
 def preprocess_data_model2(X_train, X_valid, X_test):
@@ -73,7 +60,7 @@ def create_model_aux_ouput(show_summary=False):
 
 
 def main_model1():
-    X_train, X_valid, X_test, y_train, y_valid, y_test = load_preprocess_data()
+    X_train, X_valid, X_test, y_train, y_valid, y_test = load_california_housing()
 
     model = create_model(X_train.shape[1:], show_summary=True)
 
@@ -89,7 +76,7 @@ def main_model1():
 
 
 def main_model2():
-    X_train, X_valid, X_test, y_train, y_valid, y_test = load_preprocess_data()
+    X_train, X_valid, X_test, y_train, y_valid, y_test = load_california_housing()
     inputA_train, inputB_train, inputA_valid, inputB_valid, inputA_test, inputB_test = preprocess_data_model2(X_train, X_valid, X_test)
 
     model = create_model_wide_deep(show_summary=True)
@@ -107,7 +94,7 @@ def main_model2():
 
 
 def main_model3():
-    X_train, X_valid, X_test, y_train, y_valid, y_test = load_preprocess_data()
+    X_train, X_valid, X_test, y_train, y_valid, y_test = load_california_housing()
     inputA_train, inputB_train, inputA_valid, inputB_valid, inputA_test, inputB_test = preprocess_data_model2(X_train, X_valid, X_test)
 
     model = create_model_aux_ouput(show_summary=True)

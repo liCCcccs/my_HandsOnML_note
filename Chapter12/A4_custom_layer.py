@@ -58,6 +58,24 @@ class MyMultiLayer(keras.layers.Layer):
         return [batch_input_shape1, batch_input_shape2]  # output shape is the same as input shape
 
 
+class AddGaussianNoise(keras.layers.Layer):
+    """ The aim is to demonstrate a layer that behaves different during training and predicting """
+    def __init__(self, stddev, **kwargs):
+        super().__init__(**kwargs)
+        self.stddev = stddev
+
+    def call(self, X, training=None):
+        """ Arg: training indicates whether this layer is used in training or predicting """
+        if training:
+            noise = tf.random.normal(tf.shape(X), stddev=self.stddev)
+            return X + noise
+        else:
+            return X
+
+    def compute_output_shape(self, batch_input_shape):
+        return batch_input_shape
+
+
 def create_model_1(input_shape):
     """ create a model with the custom layer """
     model = keras.models.Sequential([

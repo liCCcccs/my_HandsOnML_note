@@ -1,27 +1,11 @@
 import tensorflow as tf
 from tensorflow import keras
-from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from load_data import load_california_housing
 
 
 class PrintValTrainRatioCallback(keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs):
         print("\nval/train: {:.2f}".format(logs["val_loss"] / logs["loss"]))
-
-
-def load_preprocess_data():
-    housing = fetch_california_housing()
-
-    X_train_full, X_test, y_train_full, y_test = train_test_split(housing.data, housing.target, random_state=42)
-    X_train, X_valid, y_train, y_valid = train_test_split(X_train_full, y_train_full, random_state=42)
-
-    scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)  # fit and transform
-    X_valid = scaler.transform(X_valid)  # transform
-    X_test = scaler.transform(X_test)  # transform
-
-    return X_train, X_valid, X_test, y_train, y_valid, y_test
 
 
 def create_model(input_shape):
@@ -50,7 +34,7 @@ def get_callbacks(callback_name):
 
 
 def main():
-    X_train, X_valid, X_test, y_train, y_valid, y_test = load_preprocess_data()
+    X_train, X_valid, X_test, y_train, y_valid, y_test = load_california_housing()
 
     model = create_model(input_shape=8)
     model.compile(loss="mse", optimizer=keras.optimizers.SGD(lr=1e-3))
