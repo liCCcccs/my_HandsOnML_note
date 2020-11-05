@@ -23,6 +23,19 @@ def load_california_housing():
     return X_train_scaled, X_valid_scaled, X_test_scaled, y_train, y_valid, y_test
 
 
+def load_california_housing_unscaled(get_feature_name=False):
+    housing = fetch_california_housing()
+    X_train_full, X_test, y_train_full, y_test = train_test_split(
+        housing.data, housing.target.reshape(-1, 1), random_state=42)
+    X_train, X_valid, y_train, y_valid = train_test_split(
+        X_train_full, y_train_full, random_state=42)
+
+    if get_feature_name:
+        return X_train, X_valid, X_test, y_train, y_valid, y_test, housing.feature_names
+
+    return X_train, X_valid, X_test, y_train, y_valid, y_test
+
+
 def load_fashion_mnist_unscaled():
     fashion_mnist = keras.datasets.fashion_mnist
     (X_train_full, y_train_full), (X_test, y_test) = fashion_mnist.load_data()
