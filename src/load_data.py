@@ -126,7 +126,7 @@ def download_bach_chorales():
     return filepath
 
 
-#======================== Code in this section are for playing music ============================
+# ======================== Code in this section are for playing music ============================
 
 def notes_to_frequencies(notes):
     # Frequency doubles when you go up one octave; there are 12 semi-tones
@@ -167,9 +167,17 @@ def play_chords(chords, tempo=160, amplitude=0.1, sample_rate=44100, filepath=No
         from scipy.io import wavfile
         samples = (2**15 * samples).astype(np.int16)
         wavfile.write(filepath, sample_rate, samples)
-        #return display(Audio(filepath))   # this only works in Jupyter Notebook
+        # return display(Audio(filepath))   # this only works in Jupyter Notebook
     else:
         pass
-        #return display(Audio(samples, rate=sample_rate))   # this only works in Jupyter Notebook
+        # return display(Audio(samples, rate=sample_rate))   # this only works in Jupyter Notebook
 
-#======================== Code in this section are for playing music ============================
+# ======================== Code in this section are for playing music ============================
+
+
+def load_shakespeare():
+    shakespeare_url = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+    filepath = keras.utils.get_file("shakespeare.txt", shakespeare_url)
+    with open(filepath) as f:
+        shakespeare_text = f.read()
+    return shakespeare_text
