@@ -78,7 +78,6 @@ def complete_text(text, next_len, tokenizer, max_id, model):
     return next_text
 
 
-
 def main():
     shakespeare_text = load_shakespeare()   # This is a string
 
@@ -95,7 +94,6 @@ def main():
 
     next_sentense = complete_text("How", 5, tokenizer, max_id, model)
     print(next_sentense)
-
 
 
 if __name__ == "__main__":
