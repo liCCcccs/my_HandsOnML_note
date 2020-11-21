@@ -139,7 +139,5 @@ def main():
     print(complete_text("t", 5, tokenizer, max_id, stateless_model))
 
 
-
-
 if __name__ == "__main__":
     main()
