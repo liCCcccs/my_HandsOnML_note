@@ -37,7 +37,7 @@ def create_dataset(data_size=100):
     data_y = [char_to_id(s, chars=TARGET_CHARS) for s in target_set]
     data_X = tf.ragged.constant(data_X, ragged_rank=1)
     data_y = tf.ragged.constant(data_y, ragged_rank=1)
-    return (data_X+1).to_tensor(), (data_y+1).to_tensor()
+    return (data_X+1).to_tensor(), (data_y+1).to_tensor()  # leave index=0 to be <pad>
 
 
 def create_model(embedding_size, max_output_length):
@@ -46,6 +46,7 @@ def create_model(embedding_size, max_output_length):
         decoder's input sequence.
     """
     encoder = keras.models.Sequential([
+        # input_dim is the size of vocabulary, i.e. len([<pad>] + INPUT_CHARS)
         keras.layers.Embedding(input_dim=len(INPUT_CHARS) + 1, output_dim=embedding_size, input_shape=[None]),
         keras.layers.LSTM(128)
     ])
@@ -79,7 +80,7 @@ def main():
     model.compile(loss="sparse_categorical_crossentropy", optimizer="nadam", metrics=["accuracy"])
     history = model.fit(X_train, y_train, epochs=20, validation_data=(X_valid, y_valid))
 
-    model.save("./saved_model/Ex9_simple_encoder_decoder.h5")  # TODO: train this
+    model.save("./saved_model/Ex9_simple_encoder_decoder.h5")
 
 
 if __name__ == "__main__":
