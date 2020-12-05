@@ -33,6 +33,7 @@ def main():
     auto_encoder.fit(X_train, X_train, epochs=20, validation_data=(X_valid, X_valid))
 
     auto_encoder.save("./saved_model/A2_autoEncoder.h5")
+    encoder.save("./saved_model/A2_encoder.h5")
 
 
 if __name__ == "__main__":
