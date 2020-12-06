@@ -4,7 +4,6 @@ from load_data import load_fashion_mnist_unscaled
 import numpy as np
 
 
-
 def train_autoencoder(n_neurons, X_train, X_valid, loss, optimizer,
                       n_epochs=10, output_activation=None, metrics=None):
     """ Train an one-layer-encoder + one-layer-decoder autoencoder """
@@ -37,7 +36,6 @@ def main():
 
     auto_encoder = keras.models.Sequential([enc1, enc2, dec2, dec1])
     auto_encoder.save("./saved_model/A4_autoencoder.h5")
-
 
 
 if __name__ == "__main__":
